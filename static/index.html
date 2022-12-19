@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html><head>
+  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="خريطة الأرض المسطحة - Flat Earth Map">
+<meta name="keywords" content="الشمس والقمر,الفصول الأربعة,الشتاء,الربيع,الصيف,الخريف,خط الإستواء,مدار الجدي,مدار الشرطان,منازل القمر,مسار الشمس,مسار القمر,Sun &amp; Moon, Four Seasons,Winter,Spring,Summer,Autumn,Equator,Tropic of Cancer, Tropic of Capricorn, Moon Phases, Sun Path, Moon Path">
+<meta name="author" content="Abdelaziz Elrashed">
+<meta property="og:title" content="خريطة الأرض المسطحة - Flat Earth Map" />
+<meta property="og:type" content="website" />
+<meta property="profile:first_name" content="Abdelaziz" />
+<meta property="profile:last_name" content="Elrashed" />
+<meta property="profile:gender" content="male" />
+
+<title>خريطة الأرض المسطحة - Flat Earth Map</title>
+<link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
+
+<style type="text/css">
+.none{
+  display: none;
+}
+canvas{
+  border: 2px solid #eaeaea;
+  border-radius: 5px;
+}
+.season-table{
+  border-collapse: collapse;
+}
+.season-table th{
+  background: #eaeaea;
+}
+.season-table th, .season-table td{
+  border: 1px solid #000;
+  margin: 0;
+  text-align: center;
+}
+</style>
+
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+
+<!--[if lt IE 9]>
+  <script type="text/javascript" src="js/excanvas.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="./js/spinners.min.js"></script>
+</head>
+<body cz-shortcut-listen="true">
+
+<img id="earth" class="none" src="./earth.png">
+<img id="degree-wheel" class="none" src="./degree-wheel.png">
+
+<!-- Logo -->
+<img id="logo" class="none" width="128" height="128" title="" alt="" src="data:image/png;base64,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">
+
+<!-- Sun -->
+<img class="none" id="sun" width="32" height="32" title="" alt="" src="data:image/png;base64,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">
+
+<!-- Moon Phases -->
+
+<!-- Day 1-->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUFAAICAgMDAwYGBgkJCQwMDBISEhQUFBUVFRgYGBsbGx4eHiMjIyUlJSgoKC8vLzMzMzg4OD4+PkREREVFRU5OTk9PT1tbW15eXmNjY2hoaG5ubnBwcHV1dXp6enx8fIKCgoaGhomJiY2NjZOTk5aWlpqamq6urra2tiAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKACgALAAAAAAgACAAAAb+QJRwSCwaj8ikcslsOp/QIYFQKFCrh0WUOC0cvtZqwWGJDgiDMFjshXyegzO7W5AXEpdRM0ztFwRngAUKhCAlTFNUB1UEAgCBAGIHFCN6SYlsjH8AnGmDDBYeSlRppF1fBI8Cq1kTFxxIpwJ1catWjo+cAgcTGCGxBGulfaucuZGUJEhxVo27YlSAAICeDpXLpc9iClaqilQMG5ZGAldiaWuLklUKGodHq1fmB8EFDViaDx7vRrVhXou+LOCGBc2ACCL4FUHj5ZSaQQrAJPgy4cMbbM0UJUhQJQEDjvgygOhwaQoqgOogSnowQpmSNICCceT2hdCXAwo4mNgzxWMxAkIzgXKccEJhkioNFihdKtTnvidemEr1qIDCrygJpjKNsIXInaYJuoodS7as2SVBAAA7">
+
+<!-- Day 2-->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUGAAICAgMDAwYGBgcHBwkJCQwMDBISEhQUFBUVFRsbGx0dHSIiIiUlJS4uLjMzMzs7O0dHR0lJSVJSUlVVVVtbW15eXmFhYWRkZGpqam1tbXR0dHt7e319fYGBgYaGhouLi46OjpCQkJaWlpiYmJ+fn6Kioqenp6mpqa+vr7Kysrm5ucTExM3NzdbW1gYGBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAC4ALAAAAAAgACAAAAb+QJdwSCwaj8ikcslsOp/QYaFgqFofnShxakB4rQiJyBMlDAgG6hesIZGeZmoVwTUQqJFSqtRM+6lUAwVxBA0fKCh8S1NTCFUFAZGSVRYhIm5KXI5yfgOTBhFjGVlJVGimmgGCBJELHiQWFhxImlUEZgMDdpKSFCIbGCG0BV9ndrq4vAUSHCPOSLdpBatgZrcBaBGjJ29H0YBWXWmq0aAZFc1IAwmcXcSOXfAIChEVsiPqgo/V8wq2BgkmULgAopuRMwH8zJGXAAwDDPYwHdFUS828BV8acAD2gQy0U3e8wKuCsQqWDh5AkJrYyNEaBA0VYEQAIaUJEUvQGAOoIEFDTy8KvGA4oUJFHzoyMZb0mQCBAxAsWpw4KpPBgqsy5wlFsULRUaxgszoIcVNLgrBi22ghwhOjAgUQ1sqdS7eu3SVBAAA7">
+
+<!-- Day 3-->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUEAAICAgYGBgkJCQwMDBISEhQUFBsbGx4eHh8fHyEhISUlJSkpKS8vLzs7Oz4+PkhISE1NTVFRUV5eXmJiYmZmZmhoaG9vb3Z2dnh4eH19fYGBgYSEhIqKio2NjZOTk5aWlpiYmJubm5ycnKGhoaSkpKurq6ysrLOzs7W1tb6+vsjIyNTU1Nra2hUVFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAC0ALAAAAAAgACAAAAb+wJZwSCwaj8ikcslsOp/Q4WBQIAysB4knSpwSCmCCdaERcaKCtHWNJTw+pNEzfRVX64LBgmNCyZlrV4IEAWkBAQYZIyd+TFNTVVYBAGmUbh9wIiFKXneBhJOUCxcjHxYanJ95V3eUiBAeJBQTGUidV2kCh5KuAg4UIRkWH7asA2q6VgCulA0UGiEhIkhqj7iRA8uuDrQaJdNH1cesBAfKeQAFELMVZUgBB3VsbAJiAgYV+e3gRofybVUOmMNiwYKECh3+GKlU4J/AAgLFEEiQQQOFYQqL3CJXL2CCKgYueNCAYWQScVQIGEgwMMEYkRs4mCxGJZIdlRPNOcAQkwRQP2pfWBk4UGAoRHNaSqRI0cSKAIEJog5VeYBMiRUsSjQ9qkCqQAU6Q6BQQeJJuQNgvX69wOink6FREww9kCBCHC5EuNJlUAGv37+AAwteEgQAOw==">
+
+<!-- Day 4 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUFAAEBAQUFBQYGBgkJCQwMDBISEhQUFBgYGB0dHR8fHyAgICQkJCoqKi0tLTQ0NDg4OEJCQkVFRUpKSk9PT1NTU1dXV1tbW2RkZGdnZ2tra21tbXJycnd3d3l5eXx8fIKCgoaGhomJiYuLi4yMjJGRkZSUlJiYmJycnKOjo6enp6ioqK2trbGxsba2trm5uby8vMPDw87OztnZ2d/f3wYGBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADQALAAAAAAgACAAAAb+QJpwSCwaj8ikcslsOp/QIYFQqFYloVKUOC0YvtVFp4QKRQfoAnVdpYxVqOcgQK0a1NXB44NiuVRNeGxUAWgBCCB9Li2AS1NUd2oAkwEABBchJiebJ0pddwGCBQOUEhceKCYbZkmDal1VlQANERYmKhmnSJ9UaHOhBLILDxEaJx8bWke8aVW9lAsOpiEqmkhpU5ajBgexkwsUFKchK51H2AQDkAUIVukOGhkaGxqZSHTuA+55VRAgIBsuaABhzgg+bu66cVtw5V8HgYmuzekVyc6CdgUo8AmRIQOKRkZ4rbNiAEG7aSaQkWB1Tt8UhAcQMDyw4MA0EiNGlBjR6lFZRTvdDjA49QGnioLXvOBpJ3OhA4InWsCAEYjAl4smS5qMcIuFjBkglVSRuaDsRQMXKUR9ESPsEi9lycqU2cFPC6ROaJqdG6HPii1ETJaNWQ+w4cOIEyteEgQAOw==">
+
+<!-- Day 5 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUEAAMDAwYGBgkJCQwMDBISEhQUFBkZGR8fHyEhISQkJC4uLi8vLzo6Ojw8PEBAQEZGRkpKSkxMTFJSUlhYWFxcXGJiYmZmZmlpaW1tbXFxcXV1dXh4eH5+foODg4aGhouLi4+Pj5GRkZWVlZqampycnKCgoKenp6ioqK2trbKysra2trq6ur6+vsPDw8XFxdPT09/f3+Li4hUVFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADIALAAAAAAgACAAAAb+QJlwSCwaj8ikcslsOp/Q4WBKmDo2oFGUSC14CQnMZ2QCRQXoqnpgkGg4ppPpme6uGWKTinVqrv8BaAoSHyl7fExTAwQFBFUAkAEJEBpZJZckSnaOi4sBAAgPFRYeKCSVmoB2AQYNDxEUJCkYpEirgbiPBA68lCcfGSK2i40BAbetvG4hcplHdZucVQywFBkdIKZI0HYHageiGxhvYlpHudGcg8Eg4m/ORgLpjI0HChNYIe4i8EXy3F8OeMODpUwGDXGGMZpHQEI7DFk+cAhhZpuAKlO81CNgoEIJWmNAREyiiJGjk19iecgnQpuSi504FvDW6EIcEnpctPAT8AA8gp8FEGg4gcIQjBgoePr8+dNnAjg5XyR1AobpUgQKPuRM0c+JAasIwMlaMXWLkK9OY4Uwy7at27dwlwQBADs=">
+
+<!-- Day 6 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUFAAICAgUFBQcHBwkJCQwMDBISEhQUFBgYGBkZGR4eHiAgICUlJSsrKzIyMjY2Njo6Oj4+PkBAQEZGRkhISExMTFJSUlVVVVlZWV9fX2JiYmhoaG1tbXNzc3Z2dnl5eX19fYCAgIeHh4iIiIqKio+Pj5KSkpSUlJiYmJ2dnaGhoaKioqenp6ioqK2trbCwsLKysrW1tbq6ury8vMDAwMbGxsjIyNTU1OTk5Obm5gYGBgAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADkALAAAAAAgACAAAAb+wJxwSCwaj8ikcslsOp/QIYFQKBAgno8JFSVSCwZD4dHRolik6CAwLQzEjIwmy2qtngNruzpIUCodJSwyMyxNbnliVQUAfhMWJTKEMi1MeQQGewCNEY8fIikpK6NKU1+LfAadFBobIi8pgaV5l3xVCRCrFRkpMRtzSJhfbWtWCA0PEsoUHS0kHCXBYVYDX5cIDhESFJ6CokgDCFUEbFZgBbjLFxiB3uAImeZuBgnoFX8ZIBwfWSImSGxOvblVgAG/DB1QmNBX5t+RAPLmnRtz4sMchQxLcDlSbU2eKoooluBnwtk+Fi+CFQhQaxEBbCVR6DuxggQIE2nAiWmjqB5ogxIxWnTQQEKhRhFJBrrBFAaOiDoizMRcIqyNz2Mh6oxaEaMGjUPTFIhNoIrmCxhnb9xIaQmdWAULxEo4UycGDRuGnLiN+3buqBgyYNyJUuDtAj+iAMPoQoQe3ApbojGeTLmy5ctKggAAOw==">
+
+<!-- Day 7 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUEAAUFBQcHBwkJCQwMDBISEhQUFBkZGRsbGxwcHCEhISUlJSkpKTIyMjU1NTs7Oz4+PkJCQkVFRUpKSk9PT1BQUFVVVVhYWF9fX2FhYWZmZmtra2xsbHNzc3d3d3t7e35+foGBgYSEhIqKioyMjJCQkJSUlJqamp6enqKioqenp6qqqqysrLCwsLS0tLm5ub6+vsDAwMTExMXFxcjIyMrKytTU1OTk5Obm5gYGBgAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADgALAAAAAAgACAAAAb+QJxwSCwaj8ikcslsOp/Q4WBAIDg8IFEJFSVSCYXCRPTJolakqEAwJQgKj8xGg1WxUk8BgFqoEhoUFRYeWzAyK01uAmBVU4CBFiYvkzIqTIsDBW1uDBKeFWYqoidKU19VBW8OFJ8bHCMtKB4ipYuYVW8TF54RFBQZKi4cGR9ImV9tegSCDxC8Ex9or8ZhuF9vGBbOvBQcIisppEcCBo17BFQKGxkTFO0YGIQlLCZI5JrouAULHB7ZFRlAeCsTIs2RPbdQhfFmAkS8cCGwgKh3MB+qTAUSeFjBQsQGEWdCfPAmzggbPZsyKviQAk1EE/Q8fLBjTJHFMAZY2knxUsV0iIkjkrxxQwWjxm8yWnj4iKKE0xBC+xAN0+fVCRYtSIAYYWJeSWps0CHIyKFrCxc7X9CgkagPggRw1V09i/aFDRuILr2NC5fDilhY1dbIm2ivArga/gamcaeL4QQY/q4w1KILEQJvJWxR8dWy58+gQ4s+EgQAOw==">
+
+<!-- Day 8 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUEAAYGBgcHBwkJCQwMDBISEhQUFBkZGRoaGh8fHyEhISQkJCgoKC0tLTAwMDQ0NDw8PEJCQkREREtLS09PT1FRUVVVVVtbW15eXmFhYWdnZ2tra21tbXNzc3Z2dnl5eX9/f4KCgoWFhYiIiI+Pj5OTk5WVlZmZmZ6enqKioqampqqqqqysrLCwsLS0tLm5uby8vMDAwMHBwcTExMnJyc/Pz+Xl5ejo6BUVFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADcALAAAAAAgACAAAAb+wJtwSCwaj8ikcslsOp/Q4WBAcHBAIZEpFSVSCYXMaBwyoVikqAAwJSA2mrjmE1q1VM81tTBQVCYVFhUeJiwwMitNBAICYAQECxKSghYnh4eJS40DBWADDBERFKODhSqnJ0pUnF8FDKSkcCMtKR4iqo2NBFQOFxYao6IUGioucB9IrI9tAK8ZFqGAoh9oHCXJBZ2LXxAbHhfRgBcdhScmSAIGy7uPGCUiG7AYc2Mr50fpfI+exO8YgRpG0AFxJc0RNq0evSlh5kSIDCBSoBDhocOHawfZPeITpqGLEVdOUSSXCt8ANvsKGOjAkAWtLCdoWTyVbJEAKrowkDjTAhF+xZgkyoxIIqDTzWUXzMWk4eKDhhIpGJoIQbTTgJvZKjDk+SLoznJLOB0dYEDCmZ0vYNhZAYPGDEWdDCRAIOGEChQ906atYYNFk3QJ5iZ4gMLOixaI92ZSFDgwgxIqEvec4YJLFLmBPbB1kXYGjC5ECJTdKREj6NOoU6tenSQIADs=">
+
+<!-- Day 9 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUEAAUFBQcHBwkJCQwMDBISEhQUFBkZGR4eHiMjIygoKC0tLTMzMzc3Nzg4OEBAQEdHR0pKSk9PT1JSUlRUVFpaWlxcXGNjY2RkZGhoaG1tbXBwcHR0dHt7e39/f4KCgoSEhIuLi42NjZCQkJaWlpeXl5ubm5ycnJ6enqCgoKampqqqqq2trbCwsLa2trm5ub+/v8HBwcPDw8bGxs/Pz9LS0tnZ2dzc3Obm5ujo6AYGBgAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADkALAAAAAAgACAAAAb+wJxwSCwaj8ikcslsOp/Q4WDA2Hg+IFApFSUOCIVLiUTKnlIsUlQgmCYyoY1GfmW1VE/2lODIXCQTFRUdJSwxMStNBGxgBBEZgIGBJy+HiEwCBAMFBAcWFg8PkRMfZyqnJ0pfm5oIFK+SERJzIi4pHCCqmZkDCKIXn4C/GCsufh5Im6tuoRV+obIQFB4tcSLJBZyLVMBWoNGBHKYlSAIGBJptDFgocbAUGBlXIirkR+YFX+gOWisnH3/glcli5dqRAHsaQaB3BkU7eSxUxCmIJIAmdPtAOEThIgYJXCtWiJAjItVBAQHafOGHqoWLfyFSvEDBgQMJe0a+pNTHwAN1mVMdRYrzVypEEgGc2hBYEDOFwxY0XHTQUIhMmaOcBmRSUPRppYEnSLRAsWSTUgQ+Wx6KWGyGDUWcDKB1GbJjpUo3cLBoshWBqxd0Ads5VCORk05+HRi666KFjBkzu8hF8EGGXUsxunhpwBCV5s+gQ4sevSQIADs=">
+
+<!-- Day 10 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUDAAcHBwkJCQwMDBISEhQUFBkZGR0dHSIiIiQkJC4uLjw8PEZGRklJSUxMTFNTU1RUVFlZWVxcXGNjY2VlZWpqam9vb3FxcXZ2dnp6en19fYCAgIGBgYSEhImJiY6OjpOTk5aWlpqampycnJ2dnaCgoKampqmpqaysrLGxsbW1tba2trm5ub29vcHBwcTExMXFxcjIyM3NzdDQ0NbW1tra2tzc3Ojo6AYGBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADcALAAAAAAgACAAAAb+wJtwSCwaj8ikcslsOp/QYQBR6XCsnVEpShQQGtlQyBNWgaIBwSBByXguFvgVpTo9A/gBI055PCQSGyMqLi4oTQN4UxJxfhCPEiQthS2HSwEDXmwZEw4Njg9ZJycmJiNKal56FhSAj45xHyslGB2omAFfEQ4RrRUPDMEQFScsrBtIXqkDCp6frAsLzhAbKx4Vp0deBJkDD3wXHJ2fvBMZWiMhSAEFA90P4SAlIBcPEX8WFlcfJ2dH7ATUGPgmz0yHX4zGkIm1LlGmAxUEmZhXwsSHKnU8bIiHBEC3AQZqhZhYYoWLEBhAoDDxRp+6fwBiTrHQYaQJFSxYkCBjQmePvGxGBADA44VCmIomYaD4kMHE0g0dPCTJlYjAhBHokM5wweECOjEcpnITEOCBPBIki50ME0IFiSVeAgBQAOJEyTpq6aBoAaMGIncJQkyqpGIwJRs2WDTBRAABiBguKlEiVIiGHScgDzxwIQPGpMgsXMRYYYLLAAQZYniOXCgyFyIIOOB1CvS17du4c+tGEgQAOw==">
+
+<!-- Day 11 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUDAAUFBQkJCQwMDBISEhQUFBkZGRoaGiMjIykpKTQ0NDo6OkdHR0hISE9PT1JSUlRUVFhYWFxcXGFhYWVlZWlpaW9vb3BwcHR0dHp6enx8fICAgIaGhoiIiI6OjpOTk5eXl5mZmZycnKCgoKSkpKmpqaysrLGxsbW1tbm5ubq6uru7u729vcPDw8XFxcjIyM3NzdTU1NnZ2dvb29zc3OPj4+jo6AYGBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADYALAAAAAAgACAAAAb+QJtwSCwaj8ikcslsOp/QIYGx8VQ7nRApShwoKp+RKITVnj7RAAABsWg8lzhmwzGdtk61VyKHRCQRGyIpLS4mTQMBAQgTfQ9+jyIshSyHSwIBAgl8GhUODZAQHIMlJKZKAgIAUxQYFoB/kHEeKSMZHKgBAwd+sBWtDwygERUmKRYUGkgCBAIDbJ/BfBMLCw7XgSkdYMsEBLsMjXIcFKCPfxkgJSAgSAEFA88LE2/qHxehFhcbHx0k7UfeNUvg50KIErW2SWhFpkOGCnOQAGCm6YIFDyNKmSJxL8SdDhr0hZA4wJmCDB8+kCKx4oWIdB9nATSiKBMCNx9CpLDTUkyQGBYkXI1ZlkkAI5QhMp4g9OKMhowfriQJ8M3Ag1FKS62Q4WKDQY7sNkz9JoBBzhFZTRQCwW+EOhGXvCHAkHVniUI7TxSagSjAgQ8pXAheOglvixo1TjTRdaADDRkwXARusSLFChctZJR4MqAAg8yQC7VgsSLzCjxQBkxgEdpwUy5EJLDcaGIk7Nu4c+verSQIADs=">
+
+<!-- Day 12 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUDAAcHBwkJCQwMDBISEhQUFBkZGSEhISgoKDIyMjg4OD8/P0NDQ0dHR0hISE1NTVBQUFdXV1paWlxcXGJiYmZmZmpqam1tbXBwcHd3d3p6en9/f4CAgISEhIeHh4uLi4+Pj5GRkZaWlpqampycnKGhoaenp6mpqa+vr7KysrS0tLm5ubu7u729vcPDw8TExMXFxcjIyMzMzNHR0dXV1dvb29zc3ODg4OPj4+rq6uvr6wYGBgAAAAAAAAAAAAAAAAAAACH5BAUKADoALAAAAAAgACAAAAb+QJ1wSCwaj8ikcslsOp/QoYLiAVU/n5EpSjxEMCETaYTVpkLRQMExwWxEGbf7g1qdnoFAIkKJX/gUEx0jKy8vKE0DahAVfhEQj4wlLS8wLXdLAnp8GR0WD6CQER4kKCdiJEoCAgRsjRcVExKzoBcZISwlGh2qeoGxjBYUnw6iFnWwGkisAgvCog99FAwN0BsoHhcgywStEtEaGLbZobONYSMiSGoDe2xvWiMa5q8dZWhH7AqAGKV2ILAakbCioZGHdQIGMOhjr4SpUyfggGCRAqAFMEgAJFxYRYTDU5RIvPkHi9S6PAwi3Apjp84hER5f6OqXKl8eBHw6fmTxYsaDihDXUAAN8SFJAAIG2HwoYQLFQxY1XmSLF0IEr3UE1kzwKAZiChgvrHoUkaJmElY4SaVwuRbs2q8yaiQ6YGFSjBgw7FACSwkHjhRN1FyQgaNG1EIvKLKwRANTIgQl/N7wyZenDBZbojAwMcNGDbCVXrSAwYUIiDpeR5Rezbq169dLggAAOw==">
+
+<!-- Day 13 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUAAAQEBAkJCQwMDBQUFBgYGBwcHCcnJyoqKjY2NkBAQEZGRkhISE5OTlJSUlRUVFtbW19fX2FhYWdnZ2hoaGxsbHNzc3d3d3t7e35+foCAgISEhIuLi46OjpKSkpaWlpubm5+fn6Ojo6ampqmpqa2trbOzs7W1tbm5ubq6ury8vL29vcPDw8TExMbGxsjIyMzMzNTU1NjY2Nzc3N/f3+Pj4+Xl5evr6+7u7gYGBgAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADgALAAAAAAgACAAAAb+QJxwSCwaj8ikcslsOp9QooXT2VQ5IVGUqJBYPqNsNWvyRAUIyOSi+VwsGDjHdCI9AwbGgxKvPNQRbSctLiVNAgQKe2wXEA5/jyKELit2S2iPaxsUDZ0Pj1glJGEhSgIDC398FRMRro8Pbx51bKYHEhQTuYu6j54VJCqsGUinDBkWr5nJqZ9/GSWbHcUDsY6rFRkcE7+uGB4iHx9IAaifDHxgJSAYrhGr2hvh5AOwuBchJSojHcnpVI2mIAGASlcGK8FG6WM3K1oFCRmmHSGYgIK2EFnq6IMhQtAJDg8zjDsSAI+EQB7AqaBDaR2IhHJKHRGA58G7DmBG6FvhIsaECTc6+1VJgqeTBHA6Na6g0WIDPn4pNRA1JyFnQpYuPlAJ8cGEzCRoGkDAYoIlyxd1TLR4IaNJgTUjer6AUWetixZ4bdgw0STAAhIxbtSIQZfSihYq8Mqw1IQABRh6B1NqsULFC0IjtlhoQaOGDLyHe57YQgTEIBMqQKwjzbq169ewlwQBADs=">
+
+<!-- Day 14 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU5AAQEBAoKCg8PDxQUFBkZGRwcHCMjIykpKS4uLjc3Nzs7Ozw8PENDQ0lJSU5OTlJSUldXV1paWl1dXWBgYGVlZWtra29vb3BwcHR0dHl5eXx8fH19fYODg4WFhYmJiY2NjZCQkJaWlpiYmJ+fn6CgoKenp6qqqq6urrKysrW1tbi4uLq6ury8vMPDw8TExMjIyMzMzNPT09ra2tzc3N3d3eLi4uTk5Ovr6/b29hISEgAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADkALAAAAAAgACAAAAb+wJxwSCwaj8ikcslsOp9QYuYTooJAJFOUCLFsRqdS6ZpNhaKGhqSy8Yw2Gbjnk1qdnoQFZM3hXCJrEx0kKy8vKE0DCQ8TF30bEnsTgCYuLjAud0sGDntsHxYRjIARHyV2JSYkSgJ6k44ZFa+kcSEsJVNKBY0XFr5rGxYZopMSFycrvhtIAQiPxRCMGRadpBEcJx4XIMwKHZBdfRgdIBZ7Eq9fYiLd5tGOYCgkHRQWFRUY499j7RSBX3VOhMBg4UKHMd8afUACIMEaR1SQoZho50uLbBcwbGOYIEIvLGLspHghw4SHU2YuXPjC8ICDexxEiDDBwg4meWBckOg1YtWDEQEFGFGoEKKnxEsyWIgYJDDmQiQDRhEdQVOkixowtIGpsjTJAFcU4kms8wIGCZAizGxyAIiOzUwjb8ad0YQBuRMx8sZYUQhGWUM3bqRoUmADixo4bszYi6lFzbIlnywIMSOxDRmNHTfWEoVyjcuNMe3dQsQE3xcBfZJezbq169dJggAAOw==">
+
+<!-- Day 15 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU7ABMTExYWFhwcHCYmJigoKC4uLjIyMjc3Nzo6Oj4+PkNDQ0lJSU5OTlJSUlZWVlhYWF9fX2FhYWRkZGhoaG9vb3Nzc3R0dHh4eHx8fIODg4aGhouLi42NjZOTk5SUlJmZmZycnKGhoaSkpKenp6urq62trbKysra2tre3t7i4uLy8vL+/v8DAwMbGxsjIyMnJyc3NzdLS0tTU1Nvb29zc3OPj4+bm5urq6vLy8vb29vj4+BISEgAAAAAAAAAAAAAAACH5BAUKADsALAAAAAAgACAAAAb+wJ1wSCwaj8ikcslsOp9QIqbz4XSsIVKU+KhMTaTQNVQ6eaIHRmQyBWEuGTjnRH8WFo6INw5ZSzQjKS4uJk0EeHoZihB5EQ8RIy2DLYVLaY8TGxwWDZ0PeRwkKSUkIyFKAw19EhUbFxN+n10XHSYjFhpKCBRevLBsFBYTDo96ZRQRFkgADZoYEo+fwJ6MDxklGhQdSAIQHBnQFnHiHhWY4bQjHx/cEOafrWQnIdkTvuIagNtH3RW/FBlImCDkZs8ITRX05DoSIA8vKx5MqEhBUQUJQCxM1GuFpKE7DOtGlKEIYwa2QCc42NvAjp+CBhT+hMwoSMY8Mi1CVNAGomODglW0PqBUMYgGiyoir1xJYgCaHqEjJbaoAcMVCBIesi48MqDPI5Rg6NQEQUXMvCUKYHmTeKIFzRgxKhZt8meOjBlwMw7aO/VGJbQdWNTQcYMqCxiDiLpoYfJJBBODcRRGvFdFDBUjtkAeXCMvDBoyUmwhUmIQnRMpTo1ezbq169dKggAAOw==">
+
+<!-- Day 16 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU5ADc3Nzk5OTw8PEJCQkVFRUpKSkxMTFNTU1VVVVtbW19fX2BgYGJiYmdnZ2pqamxsbHBwcHFxcXd3d3l5eXp6en5+foODg4SEhIqKio+Pj5GRkZOTk5SUlJiYmJycnJ6enqOjo6SkpKmpqaurq62trbCwsLGxsbe3t7u7u7y8vL+/v8DAwMbGxsnJyc3NzdPT09bW1tjY2N7e3uLi4ufn5+rq6uzs7Pj4+Pn5+RISEgAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADkALAAAAAAgACAAAAb+wJxwSCwaj8ikcslsOp9QYoXTyWiuoVGUyIhYQCZSCDs6caIFRMMx5VwqcEzmRH8SDomuxUJRMP4XICgsLSZNA3h6FhUMCHl5Iy2SLCRMBo8PchGJCY4ZH2EjIR9KBH5rEhgUDmsNnQoUFBwpIVNKBxK5ERIPgBF9jnkRJCkPDRVIAQ1XFa6NCQ8Wm8GOFSQXmUgFmdgJqXEdEqd/XRogHx3aD6udERkgZSMYxqwPCl4XY0gCXfUNFmUKgVgUa6C0ckgAqPl1pQMdFCkiygOxQl69DAkRwJKVhVhEGDPMxJu3LN0RhfcY5PtAYsWKFC9ioBhFLIQxdMkSselwzgSEREkyaOUzocFC0SQGjD14wJIEChQnVrSg8UIVy4YXkvBzAOkExK8pWrgY86GnFiUMuCrggKJF2BV0XLyIOEhSk1RzQMaIkaLti0ksatQ40YQBxRo3bFAlJKlQi5iVnEhAgTgx1cZu54bYgkKG4Bp/GwfdQoSEWBQm6Gwmzbq169ewlQQBADs=">
+
+<!-- Day 17 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU/AB8fHyMjIzY2Nj4+PkNDQ0VFRUtLS09PT1BQUFRUVFlZWVtbW11dXWBgYGVlZWdnZ2hoaGpqamxsbHBwcHFxcXV1dXd3d3l5eX5+foGBgYODg4eHh4mJiYyMjJGRkZSUlJqamp6enp+fn6Ghoaenp6qqqqysrK6urrKysrW1tbm5ubu7u7y8vMLCwsbGxsjIyMzMzM3NzdHR0dbW1tfX19ra2tvb29zc3OHh4eTk5Ojo6Ovr6/Pz8/v7+/z8/BISEiH5BAUKAD8ALAAAAAAgACAAAAb+wJ9wSCwaj8ikcslsOp/QoQQDqn46nA8oSnxcNiRUieTpVEeb6EEBoWzMmAvGwuGMM08Eo9F+X/YPDFQoKykcTQkKDBAYdRwNig0JDCIshSUPTA+bDxgeHBYMk4oKWSQkIBwESnwPEoweGRQQDYGKEhQcJx4QB0oQGxkZcRkPFnMXCgYFCIkjmAYASAcXIyIdFMa0GLLLB94QI8kCSMAjHxd0JFceIBTf8Aedn75HjByzDxsihS4nGaIURGrjpp6RBG4uXKhD4oWMGizcAcI3i8EDBEgS9OFA4gSKhy5apEDxQUKGcxJESUKCAAKEOiVcrHhBI2QMGeI2WEvGwAKjxiMaGV3wQMhFzRY3SdT5QKIDnw0GizxoQCGOHRQnVriwGQMFKC0UySHpJMEYiRRaXbBIYdQFBnNvJARIYvHVBUJrC6Hdyu6KCAZLGLmsFFKGi71qx4wUMYAJxw8tbuSQLNJm5RoxMjHJcIIGjx48cmC+mdeS2yccXHz24QNHDRkvKrcogYFLCh07eOioGcPmCC5EUjhcW6LEB+DIkytfznxJEAA7">
+
+<!-- Day 18 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU/AAoKCg8PDxYWFhsbGxwcHCAgICcnJy0tLTMzM0REREZGRklJSUtLS0xMTFBQUFVVVVlZWV5eXl9fX2BgYGVlZWdnZ2pqamxsbHBwcHFxcXV1dXZ2dnl5eX19fYGBgYODg4aGhoiIiI+Pj5GRkZaWlpubm56enqOjo6enp6urq6ysrK+vr7KysrW1tbm5ub29vb+/v8LCwsbGxsfHx8jIyMzMzNHR0dbW1tvb2+Dg4Ofn5+np6fPz8/r6+vz8/BISEiH5BAUKAD8ALAAAAAAgACAAAAb+wJ9wSCwaj8ikcslsOp/Q4aVDKolIIVA1SrRoQCgW6iQKlc6VaANywXhEpg7H8/WcTJOnAyLxgkAYEhMVE1QpYhBNDxJ9HX8gEw98DhMmLi0sIwdMjBUVGiQkGosQE3tvdyQPAkoTFhUXFx4jHW2Dkg5tYCOrSrIeHh3AXhyxEg0LCw4SJikQBQBIDhwnZBheFRJuFwsJyAkLFiYYCAFIFh0nJB0aIya0ICUXDQ7fDRVUE6xH6CEaGhbcXYqBokMpB5IkwMKAgQCSB26EgfBgqYaNTBcmDOpgoWO9AUgaoNNyqIWMGjAupRBhwQ5LSQtAHsklSwSLlDVqxHCRs8Svl3eB+OwzAsHChRAcSrC4qdPFSRR/SqiAVKHXEUIY/oFQwXVgjJMp/LnzcCGBOSSfLlig1sKryRsxOAQkQbZckgcarmlIAUNGCxgsMJ3EkqUEB4e+PFQQB8NGDBswBMsQE4YFhLNK4JCAcQOHZ5xPBaMw0MSDiho8evDYATdnDEyXVDR4AkIGDx+pPZ98nbKEAy4tdPDgoePG7r8kuBBpkRNwChTJlUufTr26dSVBAAA7">
+
+<!-- Day 19 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUEAAgICAkJCQ0NDQ4ODhISEhMTExkZGR8fHyIiIjExMTs7O0JCQkdHR0tLS0xMTFBQUFVVVVpaWl5eXmBgYGVlZWdnZ2pqamxsbHFxcXV1dXZ2dnl5eX19fX5+foODg4WFhYqKio2NjZCQkJeXl5qamp6enqOjo6SkpKurq6+vr7KysrW1tbm5ub29vcHBwcbGxsnJyczMzNPT09bW1tjY2N/f3+Li4ufn5+np6e/v7/Pz8/v7+wwMDAAAAAAAAAAAACH5BAUKADwALAAAAAAgACAAAAb+QJ5wSCwaj8ikcslsOp/Q4YUzIoVEoA82SqRkPCbVyRQKVT+LqCNiuXhCJc53bvokng+2JcPhYCISExIbIycpHghNEBISUx+PEBCADxIjKiknDwVMjBReZhmLgJFvJSMYB5tJExYUGG5YF54SEA4PbWB2qkgWb49ynhl7EQ3FlFUKAAJIDxsmZMKvjR4UDg0PDNkWIRIFy0cWHCYkciBWvhe2xdobGQjfRuEfctuGlyYbo5R6Eu9IEBiycPgAx8WLGClEXBjloU0EBqmQOAhnLoXFgy3uhQhnxUIkAwD+YQg4YkULgzAyHiRBUuFHeEX0fNhA4hKLGC5uuqhT6sOOQwO7injawwEECosmWaBM6IZlA29JvFyw4CxpzhQtZrTYQMEch2Qwi0DIgGHPRZM2T2J5syFBWCMYuFoocVLnChVXx6Dg4G+JB1NZbdDQavJFRpsQgib5cFPHDh03ZCxVoYKFig2JnHx44fhxDZyG0fLlsuJGDh04ZIDO6IELEawpxZgY4bq27du4cy8JAgA7">
+
+<!-- Day 20 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUCAAgICA4ODhISEhYWFhoaGiEhISUlJS0tLTU1NTY2Njw8PD4+PkJCQkVFRUpKSk1NTVBQUFVVVVtbW15eXmBgYGdnZ2pqamxsbHNzc3V1dXZ2dnl5eX5+fn9/f4CAgIWFhYuLi42NjZOTk5aWlpmZmZycnKKioqSkpKurq6ysrLGxsbe3t7u7u76+vsDAwMbGxsjIyNHR0dbW1tnZ2d/f3+fn5+7u7vDw8Pj4+P39/QkJCQAAAAAAAAAAAAAAAAAAACH5BAUKADoALAAAAAAgACAAAAb+QJ1wSCwaj8ikcslsOp/Q4YUzIoWuHk8kSqxkOKaUqYT9PARRh6SCoZI23wsclEA7IRKKl+PBSP4TGyEmHAYDTRETExYbWVqJEhATI2JndkqKFBYZVxmQkBxXFAMCh0maFRdTIRsWFYoRDw8WjB6Gl0cWHB8gHL4VbJsQDg2yEhwMAQAASBAbJychGbR6jBbFxMUTDQLLSLonJRwXIFaNIRbZ2BMLpbhdHr3Tg2Ir4rEPEBAP2wKlSBE4fYhXboWLFylEWJCgaIOeBcveDYEgJwSlei1WqEBhIgQFgRQgKgOoqopBFi1eaESpkKCFOv+ORKDlgUqKFCdVZBQX702PAmUBkEyosIkDCBQnUmxEmRLFB3J0gCZhRPTZShb1YqyYluWAuyQBp2VAgXIpRmnjCBAIqqSCQwskyh5cipXMqLVMysWdQUOGDLl1RzAoYGoJBxYybuCwUUMrjBYsUJBAgaEAgScfXtzIsXjGi88aVYT4yYVFDcaNP7NQUaIBFyIpQKuA9uG17du4c+teEgQAOw==">
+
+<!-- Day 21 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPZCAAcHBwkJCQ4ODg8PDxMTExQUFBcXFxoaGhwcHCEhIScnJysrKy4uLjIyMjU1NTs7Oz4+PkNDQ0VFRUtLS05OTlBQUFVVVVZWVlpaWlxcXGBgYGdnZ2pqamxsbHNzc3Z2dnl5eX5+fn9/f4CAgIWFhYmJiY2NjZGRkZWVlZqampycnKGhoaWlpampqaysrLKysrW1tbq6ury8vMHBwcTExMfHx87OztHR0dbW1tjY2Nvb2+Dg4Orq6u/v7/Dw8Pj4+Pn5+f39/RISEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAEIALAAAAAAgACAAAAf+gEKCg4SFhoeIiYqLjI2Oj5CDHSEoKCWXIBoLkYQbHiMqLisqJCMlGQgDkRMYniElKR+yHLIQBQWPFRgariMeGBcZGB8lHwoIuIzBGRwhpacYwLomKhLIyYrCHJ6YF7reFSAkFbe3ihrbHc0mIBwcF8AUrO/X2IfNpSEgH7wetBUTJAi0dqBAgACIwrFgceKDO2Eb+A2UAOHBAQIYVd0LsTCEBxIm8pXYEHBghAQDbmk0tMGUvg6wWrCAoUIihZsTFAwgMGBloQvEMMWMMaPFyGAYfi0YACCAT0IVJp1AwUIm0ReiGGrwENIB0wAEEF3o0OHEiRcxYMCYoZaoiUmrJkI0OGjuUKsOIyiJWptWRoxY4krMBft00Aay+kgstNq2aAhPDHjuTMTBX4cPK9qmbQHDBoxfGxIU6BlW7Ad/HDirxboXRqkL10on6gCCWYoYMl74ba0CxYQDwAsbgoUiRg4dN2703WzCQYIEshWBeIGjxw8eO27IYIt1hYfnBx6VoOEjyPUdNGhsTmEruqMXPHz8yK6eJipOhFykhyEKRQb8AAYo4IAELhIIADs=">
+
+<!-- Day 22 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU7AAQEBAkJCQ4ODg8PDxMTExQUFBcXFxoaGh4eHiMjIycnJygoKC4uLjExMTY2Njk5OTw8PEJCQkdHR0lJSU5OTlBQUFVVVVpaWl1dXWBgYGVlZWpqam9vb3JycnR0dHl5eX9/f4KCgoWFhYqKio+Pj5GRkZWVlZmZmZycnKOjo6enp6ioqK6urrGxsbS0tLq6ury8vMPDw8bGxszMzNXV1d7e3uLi4uvr6+7u7vT09Pj4+BISEgAAAAAAAAAAAAAAACH5BAUKADsALAAAAAAgACAAAAb+wJ1wSCwaj8ikcslsOp/Q4QZUKomumYYhStR0QCgWyhT6XA6GQZRy8X5GJ09nzmGkCc9K23vtXCx/HBYIaFtMgBhTfX+AenWEaEyJGnwkfmwVFBMbdgR3ShkbooofoowSExhahXhJpB+loRymqBELAAZoAQFIFR8qKpaUjB4YtRAKAAF3akdTKiggHCEkZSAiGscMygOezUYb1GXTJcBilxMSD93s30UWbyPX1CwuLynYmXre3EgU5CZWpEhhTyC0EJN07XJHxMKcKi0iSlRhj4QXDQo9IdlT5oRBGBJdkCmWkaEUN2/M1ZN4z4MEZt1cSfNCcCULijJWPPIWEwliPD8dVhQ0aA6Eg3atknCIZeIFSKcfR6xCY9IInBMuaGid4cKmCAUHEiQwtORDVhw5btTgChUFBkhkmYyIgUNHWhoxnpZAhiDpkxY2bqjN25VTXC4tCAfroICL48eQI0uOEgQAOw==">
+
+<!-- Day 23 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPZEAAAAAAYGBgcHBwsLCw4ODhAQEBMTExQUFBYWFhgYGBwcHB0dHSAgICMjIyYmJioqKi8vLzc3Nzs7Ozw8PEBAQEdHR0tLS09PT1BQUFZWVldXV1tbW19fX2BgYGFhYWZmZmtra29vb3FxcXR0dHZ2dnl5eXp6en5+foKCgoODg4eHh4mJiY2NjZOTk5SUlJubm5ycnKOjo6ampqqqqq6urrOzs7e3t7i4uL6+vsPDw8bGxs7OztPT09TU1Nra2uDg4OTk5O3t7e/v7/j4+BISEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAEQALAAAAAAgACAAAAf+gESCg4SFhoeIiYqLjI2Oj5CDICctLCgoHgsGCZGEHyInLjMvLCYRBgepkRYeHyAmKC0iICAVqKkHjxcaHB4hlyAYGhcUuJq5jBobGx6wKCbDGBjFqQvHyR8cIaAqIRcV0sW3B9eJGrQkryjpHhrhDAQG48iIzc8hJB4b574VEgwABAi4JRARBhQyZJTqxQGDNg4TIjAQEHBgKgKIQCCEceLDCUsiYEGkAFAggFsYD2l0gSLEpBYvXiisVeGBwAMGCOBMaUiDCZaXYCW0wZGDBQgDcuYUaMBgyBYtYsSkUWNUTFM6c2blWQgDvhYoZogdG4PqiWLxLqJCtAGEh0uYLmLAmHGDLAsLKHPiRPShLwkSseYmJMshb9pEGkV8CFGW7Au6hVEeiGfury8ZVcfGhIFB8l5Fv3q1qGGDKg2pLyZMJpcgJyMVU3n06KHj9KhTqRg4oKfIRA0eQYb88FG7NAsGBhiQY/CIRY7gQn7swFH6Q4IFDBLwdlTjBxAgPqjHwJvAQSdCNHDkGBXCQdPz8OPLn09fUSAAOw==">
+
+<!-- Day 24 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU5AAAAAAYGBgsLCw8PDxAQEBYWFhcXFxgYGBwcHCAgICMjIygoKC8vLzAwMDQ0NDk5OUFBQUZGRkpKSk9PT1BQUFZWVltbW15eXmFhYWZmZmtra2xsbHJycnR0dHl5eX5+foODg4eHh4iIiI2NjZKSkpaWlpiYmJycnKKioqWlpaurq66urrGxsbW1tbu7u8DAwMfHx9HR0dbW1t7e3uLi4uTk5Ozs7O3t7fb29hISEgAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADkALAAAAAAgACAAAAb+wJxwSCwaj8ikcslsOp/QoaYzGn00CULhECViOJ8SigRyaLeD6ASTmYJGG4z5vH1OKpbvx6OhTBgCA2cIBU14eR4gfBUSEg0BAVuECARMFRcYeiF9EY4AkWhblUmYU24cmX6PAYIEBwRaShghih2oeRmYZp+QoaNGFB4pKJupE5gVDLy8BQUEaUcaIComfFTWHsmQy2e/RdIle18iJWIiGQ8CzK2uSBVhm3zTKiskHRGCgYEDkd5EwSHInCg3bIy9V91gBUJCwRaZgilWFBRBqNuAfEgsxKE1YkzEiRXPXISFhM0GWyBMqDyBoiWIBQgtQovGp40JiAM5wHTlzNlhsyTvUGnAmTNByG5LwGQisaLFiqcmMCTIIukAJSbkmMbY6mJYhqmTFBBqwoFFjBs4aMh4EVGq1bBPRLxAe2MGjBYqKLwF24XFDBpq8UKA22VIUxcoRCh4Vbix48eQIy8JAgA7">
+
+<!-- Day 25 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU3AAMDAwUFBQoKCg8PDxAQEBcXFxsbGx0dHSEhISIiIiUlJSkpKS8vLzAwMDU1NT09PUNDQ0tLS09PT1BQUFRUVFpaWl9fX2BgYGdnZ2pqam1tbXFxcXV1dXp6en9/f4GBgYaGhouLi4+Pj5GRkZaWlpiYmJ2dnaGhoaSkpKmpqa+vr7CwsLe3t7i4uL+/v8jIyMrKys7OztfX19vb2+Li4ujo6PDw8BISEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADcALAAAAAAgACAAAAb+wJtwSCwaj8ikcslsOp/QYYYTAmUSA0KhECVeNBxSyaPQmglRSeUy9YQqh/MW7ZRQ1u0LZJ41+LlMd3gdHBsTD1oBAVsHjXRKeGwfHxgRiACYfWeQGJ2dHoaHBZgAWXJKGZOEG5UWegaKpIuwAgNIEx0oJ5RrExF3o7KlfEgaICkkHBYboJ60wptHqckZyx8j2BsHsZmmWkgV11aFuScoZLWLBOnqtx0gIiFiI7pjZXKnRxSF8eYm/h4aOML37UgFDamYlRCD7AODgXxMIWEzxdi8fyAEQsx3BEMhNgwxKvhD0BaSfRpc/TtBgoRDLRsNPCqm7IKIFCrMhVhAIAFJFpiOmMAbsQIGDBctdjZa6gdLkw5Fa9iYEYOFiIcHmvo08ASEC6k1ZLgg4UBr0CgqZtCgaqLs0gRdiOC0+tAA3Lh48+rdy1dJEAA7">
+
+<!-- Day 26 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPU4AAAAAAcHBwgICA0NDRERERQUFBsbGxwcHCEhISUlJSoqKisrKzMzMzU1NTs7Oz09PUFBQUlJSU9PT1FRUVVVVVlZWVxcXGBgYGZmZmlpaWtra25ubnJycnd3d3t7e39/f4KCgoaGhoqKio+Pj5KSkpWVlZubm5ycnKGhoaenp6ioqK6urrCwsL29vcHBwcbGxsvLy8zMzNTU1NjY2OLi4ujo6O3t7fLy8hISEgAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADgALAAAAAAgACAAAAb+QJxwSCwaj8ikcslsOp/QIYYT6iQI2IIhSrxsOiKPIUuORipeTseiJbefEgp6unkIBnj8Yb9lyucdHBgLAXeFWnwETBIWF2keFggAhpNtb0kUGJpeHxsVVwKTh2SKSRkgHx4bGRcTEwt5oocHWANIEx4oJiCtFREQCFiTw5VZSBshKSSCX56gxLK1SKfLGBVfVQ210W5IFiAlIM1UInbbeeilRrgh7SPuIwxu83hIFIFhJvolJNoGwfQKqCtyDYO4EPz4OSCQiIBAgQMEIrlgIQOzd+8WJrJUZpqHCo1InDAxAkIWBLToYcLgCYMJZSRMIkpJagmGDyFTqChBoQ1DSkt7BiIBJ2LFCxcsMozhwzRYExAsYNCwIcOFlaY/+zxtUeMGjRgiEmRNxGXFjLMpFmDlQkQnCo3/2MqdS7eu3SVBAAA7">
+
+<!-- Day 27 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUyAAEBAQUFBQkJCQ4ODhERERMTExUVFRkZGR0dHR4eHiAgICcnJzAwMDY2Njg4OEFBQURERElJSU9PT1FRUVRUVFlZWV5eXmNjY2ZmZmtra25ubnBwcHR0dHp6enx8fIKCgoaGhoqKio6OjpKSkpeXl5mZmZ+fn6GhoaSkpKqqqri4uMTExNPT09XV1dvb2+Dg4OXl5erq6hISEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKADIALAAAAAAgACAAAAb+QJlwSCwaj8ikcslsOp/Q4WXDYRCu2CgRk9lYDtgwISqhWLgNsfhZNl8wC7XhkKg3zZW3NyEI9P0EdXVjSxIWeVwVBACMfoBzkEpvGRVnGxFYf49gV0oZHqBdFlYDV46bpkgTHSYkHhdlC4+NtHOlSBogJyIaZhoOpaa0AMGdR7m8sG8PYrVrRxYfIx2JGMx8wgKZgEgUHaDfoBC2cs9GFuEeI+uYWArkakgVGhjUHSEf7XOD5Uh69BvwTXDHT06SDBwwnBExQhEnOtjidevQCwOJEhke7oMHZgkGL9FMfHj3kB8/JupCoFCBooFJQYIMNOGQYoULGCsikNwJ88klBxUvYrTgoICnIEJQUrRgcYJB0afvtBBpJQGiHalYs2rdylVJEAA7">
+
+<!-- Day 28 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUvAAAAAAUFBQsLCw8PDxMTExUVFRgYGB0dHSAgICQkJCgoKC4uLjIyMjc3Nzo6Oj4+PkREREZGRkhISE5OTlBQUFdXV1hYWF5eXmNjY2VlZWpqam1tbXJycnZ2dnh4eH9/f4KCgoaGhomJiY2NjZCQkJubm52dnaOjo6mpqbOzs7u7u7+/v8PDw9DQ0NfX1xISEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAC8ALAAAAAAgACAAAAb+wJdwSCwaj8ikcslsOp/QIaaCIAys2CjxgmFgr+DCIAqxWCDir7rwnFAqlgX4KzYc7s033JIAB/5/BHeDTBcWcBIGV4CAa2xJGBgWhhBqAoBzAwYEShoeHRsXDWEDBYyBin9IFB4lJBwUCAN/VwSnAQJpY0cbICYhGRK6YpenuWBIvSIaFRAIApaAAgKkSBggy4ayBAR2WNNWi7lIFp/mco7pu0YXoOekBXfcc9DrRRbMHBgbDvAH6va2ZNi37wEpO/LmfYOkbw8WRYISKLxSoACnVaHeYFBUEUxChQaWaNBgZuOghB+7BTzyYUQIEs4QyIx30o7EJh1QrGgRQqYlz5k28Tj5kMKFCgc/awqFcoLFBwVJfWoh8iHmyalYs2rdynVJEAA7">
+
+<!-- Day 29 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPUkAAEBAQYGBggICA4ODhAQEBYWFhkZGR0dHSAgICUlJS0tLTQ0NDo6Oj4+PkJCQkVFRUtLS09PT1JSUlZWVltbW2JiYmRkZGhoaGpqamxsbHBwcHV1dX9/f4GBgYWFhYmJiZOTk56enq+vr7OzsxISEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKACQALAAAAAAgACAAAAb3QJJwSCwaj8ikcslsOp/QYURBKFSvhShxwrB6sdaoQ+L4grFPSGSKFQzAh3hTQn+YA258NX4gMCcUXFgAAHiEZ1lJFBWBCW9XeYWPBldKFhsaFQiPnAGHen1uSBEbIB4UVnmPhKwAnUgZHKYQnIOtAG6VR7EdFQyqbZ+5j0gYHb0NiATAnX5HFJgatMrUzkYUmRvTZnxnxM+MjIjdykiMixQE43Hl5hkUEKHcCfJtSRIYFWzcBeRoShgsCOpHsKCXbkw4eMiggA8CSgYcImSiIcQIhg8zanT4hIMIEWXobcxo7UmIDwsQiNyohci+iS1jypxJs2aSIAA7">
+
+<!-- Day 30 -->
+<img width="32" height="32" title="" alt="" class="none moon-phase" src="data:image/gif;base64,R0lGODlhIAAgAPQSAAMDAwcHBwgICA4ODhERERYWFhkZGR0dHR4eHiIiIiQkJCwsLDIyMjc3Nz4+PkVFRU5OTlBQUBISEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKABIALAAAAAAgACAAAAW2oCSOZGmeaKqubOu+8DjMRG0XMUkX/N3HgqBvyHsdhDck7cBsLXY2oZJ5ZCWgNYB2S1Q1ekMpAEtQPZPQADcAHqAc1556nt1ybajIMUu232soEAZRYXN0NygPbURiNGxlJw6LjIWQJg6UPXGFiQUCBQRkTJl5RwI1Awc+VIwpDIyDBKxdKF+ZPKM+K2dLBrO/g1Y2CcTEuKzGTsQHCgvGyKxGxdPQwTG+1NQ5JMfR29/g4eLjKiEAOw==">
+
+<!-- Moon Phases -->
+
+<center>
+<table width="100%">
+  <tbody><tr>
+    <td width="16%" align="left" valign="top">
+        <h1>Flat Earth Map</h1>
+        <u>
+          <font size="4px">(With Seasons &amp; Moon Phases)</font>
+        </u>
+        <p>
+This map depends on Arabic months only, because it is based on the Lunar mansion from the ground up, and for the months of the calendar like(Jan, Feb, ...) has been displacement in order to be consistent with the reality of the Sun and the Moon</p>
+
+    <table class="season-table" dir="ltr" width="100%">
+
+          <tbody><tr>
+            <th colspan="4">The Sun Path</th>
+          </tr>
+
+          <tr>
+            <th>#</th>
+            <th>Month</th>
+            <th>Tropic</th>
+            <th>Season</th>
+          </tr>
+
+          <tr>
+            <td>1</td>
+            <td>January</td>
+            <td>Capricorn</td>
+            <td>Winter</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>February</td>
+            <td>Capricorn</td>
+            <td>Winter</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>March</td>
+            <td>Capricorn</td>
+            <td>Winter</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>April</td>
+            <td>Equator</td>
+            <td>Spring</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>May</td>
+            <td>Equator</td>
+            <td>Spring</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>June</td>
+            <td>Equator</td>
+            <td>Spring</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>July</td>
+            <td>Cancer</td>
+            <td>Summer</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>August</td>
+            <td>Cancer</td>
+            <td>Summer</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>September</td>
+            <td>Cancer</td>
+            <td>Summer</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>October</td>
+            <td>Equator</td>
+            <td>Autumn</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>November</td>
+            <td>Equator</td>
+            <td>Autumn</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>December</td>
+            <td>Equator</td>
+            <td>Autumn</td>
+          </tr>
+        </tbody></table>
+
+        <p>
+          <b>
+          <font color="red">Note</font>: Many people think that the concept of a "Flat Earth" is a new concept in this era, but the reality is that the concept of a Flat Earth is the basis since the beginning of creation, and the Greek philosophers (such as Socrates, Plato, Aristotle ... and others) tried to turn this concept around and say that the Earth Spherical, and despite this, it continued to be said that the Earth is Flat until the modern media, in the last 150 years or so, re-exported that the Earth is Spherical again, so this map has not been completed yet, and this is only the beginning of what is expected from our point of view for that, It will be constantly updated if new things are revealed and become more understandable if Allah wills.
+          </b>
+        </p>
+
+        <p>Last Update: 19-12-2022 AD / 25-05-1444 AH</p>
+        <p>Previous: 01-02-2016 AD / 22-04-1437 AH</p>
+
+    </td>
+    <td width="1024px" align="center" valign="top" style="position: relative;">
+      <span id="spinner" style="position: absolute; height: 88px; width: 88px; top: 50%; left: 50%; margin-left: -44px; margin-top: -44px;"></span>
+      <canvas id="canvas" width="1024" height="668">
+        Your browser doesn't support HTML5 Canvas!
+      </canvas>
+
+      <img src="./moon-phases.png">
+      <img src="./moon-phases-ar.png">
+
+      <p>For any suggestions or improvements, please send them to the following e-mail <b><a target="_blank" href="mailto:aeemh.sdn@gmail.com">aeemh.sdn@gmail.com</a></b> <span dir="rtl">ﻷي مقترحات أو تحسينات يرجى إرسالها إلى عنوان البريد التالي</span></p>
+      <p>The source code for the application has been uploaded to this link <b><a target="_blank" href="https://github.com/vzool/flat-earth-map">https://github.com/vzool/flat-earth-map</a></b> <span dir="rtl">لقد تم رفع البرمجة المصدرية للتطبيق على هذا الرابط</span></p>
+    </td>
+    <td width="16%" align="right" valign="top">
+        <h1>الأرض المسطحة</h1>
+        <p>
+          تم اعتماد واستخدام الشهور العربية فقط ، ﻷنها مبنية على منازل القمر من الأساس ، وبالنسبة للشهور الميلادية فقد تم إزاحتها من أجل أن تتوافق مع واقع الشمس والقمر
+        </p>        
+
+        <table class="season-table" dir="rtl" width="100%">
+          
+          <tbody><tr>
+            <th colspan="4">مسار الشمس</th>
+          </tr>
+
+          <tr>
+            <th>م</th>
+            <th>الشهر</th>
+            <th>المدار</th>
+            <th>الفصل</th>
+          </tr>
+
+          <tr>
+            <td>1</td>
+            <td>محرم</td>
+            <td>مدار الجدي</td>
+            <td>الشتاء</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>صفر</td>
+            <td>مدار الجدي</td>
+            <td>الشتاء</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>ربيع الأول</td>
+            <td>مدار الجدي</td>
+            <td>الشتاء</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>ربيع الثاني</td>
+            <td>الإستواء</td>
+            <td>الربيع</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>جمادى الأولى</td>
+            <td>الإستواء</td>
+            <td>الربيع</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>جمادى الثانية</td>
+            <td>الإستواء</td>
+            <td>الربيع</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>رجب</td>
+            <td>السرطان</td>
+            <td>الصيف</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>شعبان</td>
+            <td>السرطان</td>
+            <td>الصيف</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>رمضان</td>
+            <td>السرطان</td>
+            <td>الصيف</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>شوال</td>
+            <td>الإستواء</td>
+            <td>الخريف</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>ذو القعدة</td>
+            <td>الإستواء</td>
+            <td>الخريف</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>ذو الحجة</td>
+            <td>الإستواء</td>
+            <td>الخريف</td>
+          </tr>
+        </tbody></table>
+
+        <p dir="rtl">
+          <b><font color="red">ملحوظة</font>: يظن الكثير من الناس أن مفهوم "الأرض المسطحة" هو مفهوم جديد في هذا العصر، ولكن الواقع أن مفهوم الأرض المسطحة هو الأساس منذ نشأت الخلق، وقام الفلاسفة اليونانيون (أمثال: سقراط وافلاطون وارسطو ... وغيرهم) بمحاولة قلب هذا المفهوم والقول أن الأرض كروية، وبالرغم من ذلك استمر القول بأن الأرض مسطحة الى أن قام الإعلام الحديث في آخر 150 عام تقريبا بإعادة تصدير أن الأرض كروية مرة أخرى، لذلك فإن هذه الخريطة لم يتم الإنتهاء منها حتى الآن، وهذه بداية فقط لما هو متوقع من وجهة نظرنا لذلك، وسوف يتم تحديثها باستمرار إذا تكشفت أمور جديدة وأصبحت مفهومة أكثر إن شاء الله.
+          </b>
+        </p>
+
+        <p>آخر تحديث: 19-12-2022 م / 25-05-1444 هـ</p>
+        <p>تحديث سابق: 01-02-2016 م / 22-04-1437 هـ</p>
+    </td>
+  </tr>
+</tbody></table>
+
+<hr>
+
+<table width="100%">
+	<tbody><tr>
+		<td width="15%" valign="top">
+			<h3>The current calendar months are not in the right place where it should be each month begins with the moon</h3>
+		</td>
+		<td width="1024px" align="center" valign="top">
+			<img src="./calendar1.jpg">
+			<img src="./calendar2.jpg">
+			<img src="./calendar3.jpg">
+		</td>
+		<td width="15%" valign="top" dir="rtl">
+			<h3>الشهور الميلادية الحالية ليست في مكانها الصحيح حيث أنه يجب أن يبدأ كل شهر مع القمر</h3>
+		</td>
+	</tr>
+</tbody></table>
+
+  <div id="canvas_container">
+    <div class="en_desc">
+    Flat Earth Map with Seasons &amp; Moon Phases, Provided by <em>Abdelaziz Elrashed</em>
+    </div>
+  </div>
+</center>
+
+<script>
+var earth, sun, moon, ctx,
+    canvas, degree_wheel,
+    logo,
+    day = 0,
+    month = 0,
+
+    tropicLineWidth = 2,
+    wheelX = 0,
+    wheelY = 0,
+    earthX = 57,
+    earthY = 60,
+    sunX = 255,
+    sunY = 74,
+    moonX = 255,
+    moonY = 385,
+
+    TropicCancerRadius = 90,
+    TropicEquatorRadius = 134,
+    TropicCapricornRadius = 182,
+
+    centerX = 330,
+    centerY = 330,
+    mHz = 16,
+
+    solarStep = 15.0,
+    LunarStep = 14.5,
+
+    totalDegrees = 360.0,
+    calibrationValue = -20,
+
+    moonPhaseIndex = 0;
+
+
+/* Seasons */
+var sunMap = [
+  /* Winter */
+  TropicCapricornRadius,
+  TropicCapricornRadius,
+  TropicCapricornRadius,
+
+  /* Spring */
+  TropicEquatorRadius,
+  TropicEquatorRadius,
+  TropicEquatorRadius,
+
+  /* Summer */
+  TropicCancerRadius,
+  TropicCancerRadius,
+  TropicCancerRadius,
+
+  /* Autumn */
+  TropicEquatorRadius,
+  TropicEquatorRadius,
+  TropicEquatorRadius,
+];
+
+var seasonName = [
+  '\u0627\u0644\u0634\u062A\u0627\u0621',
+  '\u0627\u0644\u0631\u0628\u064A\u0639',
+  '\u0627\u0644\u0635\u064A\u0641',
+  '\u0627\u0644\u062E\u0631\u064A\u0641'
+];
+
+var seasonNameEn = [
+  'Winter',
+  'Spring',
+  'Summer',
+  'Autumn'
+];
+
+var seasonNameMap = [
+  0, 0, 0,
+  1, 1, 1,
+  2, 2, 2,
+  3, 3, 3
+];
+
+var monthName = [
+  '\u0645\u062D\u0631\u0645',
+  '\u0635\u0641\u0631',
+  '\u0631\u0628\u064A\u0639 \u0627\u0644\u0623\u0648\u0644',
+  '\u0631\u0628\u064A\u0639 \u0627\u0644\u062B\u0627\u0646\u064A',
+  '\u062C\u0645\u0627\u062F\u064A \u0627\u0644\u0623\u0648\u0644',
+  '\u062C\u0645\u0627\u062F\u064A \u0627\u0644\u062B\u0627\u0646\u064A',
+  '\u0631\u062C\u0628',
+  '\u0634\u0639\u0628\u0627\u0646',
+  '\u0631\u0645\u0636\u0627\u0646',
+  '\u0634\u0648\u0627\u0644',
+  '\u0630\u0648 \u0627\u0644\u0642\u0639\u062F\u0629',
+  '\u0630\u0648 \u0627\u0644\u062D\u062C\u0629',
+];
+
+var monthNameEn = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
+var moonPhase = [];
+
+var drawWheel = function(){
+  ctx.drawImage(degree_wheel, wheelX, wheelY);
+};
+
+var drawEarth = function(){
+  ctx.drawImage(earth, earthX, earthY);
+};
+
+var drawSun = function(){
+  ctx.drawImage(sun, sunX, sunY);
+};
+
+var drawMoon = function(){
+  try{
+
+    if(moonPhase[day]){
+      ctx.drawImage(moonPhase[day], moonX, moonY);
+    }
+
+  }catch(ex){}
+};
+
+var drawLogo = function(){
+  ctx.drawImage(logo, 770, 400);
+  ctx.strokeStyle = '#333333';
+  ctx.font = '15pt Arial';
+  ctx.fillText('\u0627\u0644\u0639\u0642\u0648\u0644 \u0627\u0644\u0645\u0633\u0637\u062D\u0629', 750, 550);
+  ctx.fillText('http://vzool.blogspot.com', 715, 580);
+};
+
+var drawTropics = function(){
+  // Tropic Cancer
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, TropicCancerRadius, 0, 2 * Math.PI);
+  ctx.lineWidth = tropicLineWidth;
+  ctx.strokeStyle = 'yellow';
+  ctx.stroke();
+
+  // Equator
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, TropicEquatorRadius, 0, 2 * Math.PI);
+  ctx.lineWidth = tropicLineWidth;
+  ctx.strokeStyle = 'red';
+  ctx.stroke();
+
+  // Tropic Capricorn
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, TropicCapricornRadius, 0, 2 * Math.PI);
+  ctx.lineWidth = tropicLineWidth;
+  ctx.strokeStyle = 'orange';
+  ctx.stroke();
+
+};
+
+var drawGraph = function(){
+
+  ctx.font = '18pt Arial';
+  ctx.fillText('\u062E\u0631\u064A\u0637\u0629 \u0627\u0644\u0623\u0631\u0636 \u0627\u0644\u0645\u0633\u0637\u062D\u0629 \u0628\u0627\u0644\u0641\u0635\u0648\u0644 \u0648\u0645\u0646\u0627\u0632\u0644 \u0627\u0644\u0642\u0645\u0631', 555, 50);
+  
+  ctx.font = '10pt Arial';
+  ctx.fillText('Tropic of Cancer / \u0645\u062F\u0627\u0631 \u0627\u0644\u0633\u0631\u0637\u0627\u0646', 760, 80);
+
+  ctx.beginPath();
+  ctx.lineWidth = tropicLineWidth;
+  ctx.moveTo(950, 75);
+  ctx.lineTo(1000, 75);
+  ctx.lineWidth = tropicLineWidth + 3;
+  ctx.strokeStyle = 'yellow';
+  ctx.stroke();
+
+  ctx.font = '10pt Arial';
+  ctx.fillText('Equator / \u062E\u0637 \u0627\u0644\u0625\u0633\u062A\u0648\u0627\u0621', 820, 110);
+
+  ctx.beginPath();
+  ctx.lineWidth = tropicLineWidth;
+  ctx.moveTo(950, 105);
+  ctx.lineTo(1000, 105);
+  ctx.lineWidth = tropicLineWidth + 3;
+  ctx.strokeStyle = 'red';
+  ctx.stroke();
+
+  ctx.font = '10pt Arial';
+  ctx.fillText('Tropic of Capricorn / \u0645\u062F\u0627\u0631 \u0627\u0644\u062C\u062F\u064A', 760, 140);
+
+  ctx.beginPath();
+  ctx.lineWidth = tropicLineWidth;
+  ctx.moveTo(950, 135);
+  ctx.lineTo(1000, 135);
+  ctx.lineWidth = tropicLineWidth + 3;
+  ctx.strokeStyle = 'orange';
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.lineWidth = tropicLineWidth;
+  ctx.moveTo(615, 165);
+  ctx.lineTo(1111, 165);
+  ctx.lineWidth = tropicLineWidth + 2;
+  ctx.strokeStyle = '#15435B';
+  ctx.stroke();
+
+  ctx.font = '15pt Arial';
+  ctx.fillText('# RealTime Info - \u0645\u0639\u0644\u0648\u0645\u0627\u062A \u0627\u0644\u0632\u0645\u0646 \u0627\u0644\u062D\u0642\u064A\u0642\u064A #', 640, 200);
+
+  ctx.fillText(':\u0627\u0644\u064A\u0648\u0645' , 970, 240);
+  
+  ctx.font = '20pt Arial';
+  ctx.fillText(day + 1, 840, 240);
+
+  ctx.font = '15pt Arial';
+  ctx.fillText('Day No: ', 680, 240);
+
+  ctx.fillText(':\u0627\u0644\u0634\u0647\u0631', 960, 280);
+  ctx.fillText(monthName[month], 905, 280);
+  
+  ctx.font = '20pt Arial';
+  ctx.fillText('(' + (month + 1) + ')', 830, 280);
+  ctx.font = '15pt Arial';
+
+  ctx.fillText('Month: ' + monthNameEn[month], 680, 280);
+
+  ctx.fillText('\u0627\u0644\u0641\u0635\u0644 \u0627\u0644\u062D\u0627\u0644\u064A: ' + seasonName[seasonNameMap[month]], 840, 320);
+  ctx.fillText('Season: ' + seasonNameEn[seasonNameMap[month]], 680, 320);
+
+  ctx.beginPath();
+  ctx.lineWidth = tropicLineWidth;
+  ctx.moveTo(658, 350);
+  ctx.lineTo(1111, 350);
+  ctx.lineWidth = tropicLineWidth + 2;
+  ctx.strokeStyle = '#15435B';
+  ctx.stroke();
+};
+
+var init = function (){
+  
+  // init
+  canvas = document.getElementById("canvas");
+  ctx = canvas.getContext("2d");
+
+  // load degree wheel
+  degree_wheel = document.getElementById("degree-wheel");
+  
+  // load earth image
+  earth = document.getElementById("earth");
+
+  // load sun image
+  sun = document.getElementById("sun");
+
+  // load logo image
+  logo = document.getElementById("logo");
+
+  moonPhase = document.getElementsByClassName("moon-phase");
+};
+
+var spinner = null;
+
+var startup = function(){
+	
+	spinner = Spinners.create('#spinner', {
+	  radius: 30,
+	  height: 10,
+	  width: 2.5,
+	  dashes: 30,
+	  opacity: 1,
+	  padding: 3,
+	  rotation: 700,
+	  color: '#000000'
+	}).play();
+
+	spinner.center();
+};
+
+var alpha = (Math.PI * 2) / totalDegrees;
+var angle = 0.0;
+var i = 0;
+var j = 180;
+var sunTheta, moonTheta;
+
+var EarthLoop = function(){
+  
+  // console.log(Date());
+
+  angle *= Math.PI / 180;
+
+  sunTheta = alpha * i;
+  moonTheta = alpha * j;
+
+  sunX  =  Math.floor(Math.cos( sunTheta + angle) * sunMap[month]) + (centerX + calibrationValue);
+  sunY  = Math.floor(Math.sin( sunTheta + angle) * sunMap[month] ) + (centerY + calibrationValue);
+
+  moonX  =  Math.floor(Math.cos( moonTheta + angle) * TropicEquatorRadius) + (centerX + calibrationValue);
+  moonY  = Math.floor(Math.sin( moonTheta + angle) * TropicEquatorRadius ) + (centerY + calibrationValue);
+
+  // console.log("Moon Step j:", j);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawEarth();
+  drawWheel();
+  drawTropics();
+  drawSun();
+  drawMoon();
+  drawGraph();
+  drawLogo();
+
+  if(day >= 30){
+    month += 1;
+    day = 0;
+  }
+
+  if(month >= 12){
+    month = 0;
+    day = 0;
+  }
+
+  if(j >= 360){
+    j = 0;
+  }
+
+  if(i >= 360){
+
+    i = 0
+
+    day += 1;
+
+    // console.log("Day", day, "Month", month);
+
+  }else{
+
+    ++i;
+    j += 0.9666666666666667;
+
+  }
+
+};
+
+window.onload = function() {
+
+  init();
+
+  setTimeout(function(){
+
+	  setInterval(EarthLoop, mHz);
+
+	  spinner.remove();
+  	
+  }, 1000);
+}
+
+startup();
+</script>
+
+
+
+</body></html>
